@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 以下是mybatis框架下对学生表表所声明方法的实现 -->
+<mapper namespace="dao.StudentDao">
+    <select id="queryAllStudents" resultType="pojo.Student">
+         select * from t_student
+    </select>
+    <select id="findByUsername" resultType="pojo.Student">
+    	select * from t_student
+    	where username=#{username};
+    </select>
+    <select id="findByIdnumber" resultType="pojo.Student">
+    	select * from t_student
+    	where idnumber=#{idnumber};
+    </select>
+    <insert id="insertStudent">
+		insert into t_student(s_id,username,password,realname,gender,phone,mail,picturepath,idnumber)
+		values(#{s_id},#{username},#{password},#{realname},#{gender},#{phone},#{mail},#{picturepath},#{idnumber})
+	</insert>
+	<delete id="deleteStudent">
+		delete from t_student
+		where username=#{username}
+	</delete>
+	<select id="searchStudent" resultType="pojo.Student">
+		select * from t_student
+		<where>
+			<if test="username!=null and username!=''">username like concat(concat('%',#{username}),'%')</if>
+			<if test="realname!=null and realname!=''">realname like concat(concat('%',#{realname}),'%')</if>
+			<if test="gender!=null and gender!=''">gender=#{gender}</if>
+			<if test="phone!=null and phone!=''">phone like concat(concat('%',#{phone}),'%')</if>
+			<if test="mail!=null and mail!=''">mail like concat(concat('%',#{mail}),'%')</if>
+		</where>
+	</select>
+	<update id="updateStudent">
+		update t_student 
+		set username=#{username},realname=#{realname},gender=#{gender},
+		phone=#{phone},mail=#{mail},picturepath=#{picturepath},idnumber=#{idnumber}
+		where s_id=#{s_id}
+	</update>
+	<update id="studentfindpassword">
+		update t_student
+		set password=#{password}
+		where idnumber=#{idnumber}
+
+	</update>
+	<update id="editStudent">
+		update t_student 
+		set username=#{username},password=#{password},realname=#{realname},gender=#{gender},
+		phone=#{phone},mail=#{mail},idnumber=#{idnumber},textarea4=#{textarea4},
+		textarea5=#{textarea5},textarea6=#{textarea6}
+		where s_id=#{s_id}
+	</update>
+</mapper>

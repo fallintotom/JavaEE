@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 以下是mybatis框架下对章节表所声明方法的实现 -->
+<mapper namespace="dao.ChapterDao">
+    <select id="queryAllChapters" resultType="pojo.Chapter">
+        select * from t_chapter;
+    </select>
+    <update id="updatechapter">
+    	update t_chapter
+    	set c_name=#{c_name}
+    	where c_id=#{c_id}
+    </update>
+    <delete id="deletechapter">
+    	delete from t_chapter
+    	where c_id=#{c_id}
+    </delete>
+    <select id="searchchapter" resultType="pojo.Chapter">
+      select * from t_chapter
+      <where>
+          <if test="c_name!=null and c_name!=''">c_name like concat(concat('%',#{c_name}),'%')</if>
+      </where>
+   </select>
+   <insert id="insertchapter">
+   	   insert into t_chapter(c_id,c_name)
+   	   values(#{c_id},#{c_name})
+   </insert>
+</mapper>

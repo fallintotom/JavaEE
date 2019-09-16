@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 以下是mybatis框架下对教师表所声明方法的实现 -->
+<mapper namespace="dao.TeacherDao">
+    <select id="queryAllTeachers" resultType="pojo.Teacher">
+       select * from t_teacher;
+    </select>
+    <select id="findByUsername" resultType="pojo.Teacher">
+    	select * from t_teacher
+    	where username=#{username};
+    </select>
+    <insert id="insertTeacher">
+		insert into t_teacher(t_id,username,password,picturepath,idnumber)
+		values(#{t_id},#{username},#{password},#{picturepath},#{idnumber})
+	</insert>
+	<delete id="deleteTeacher">
+		delete from t_teacher
+		where username=#{username};
+	</delete>
+	<select id="searchTeacher" resultType="pojo.Teacher">
+		select * from t_teacher
+		where username=#{username}
+	</select>
+	<update id="updateTeacher">
+		update t_teacher
+		set username=#{username},picturepath=#{picturepath},idnumber=#{idnumber}
+		where t_id=#{t_id}
+	</update>
+	<update id="teacherfindpassword">
+		update t_teacher
+		set password=#{password}
+		where idnumber=#{idnumber}
+	</update>
+	<update id="editTeacher">
+		update t_teacher
+		set username=#{username},password=#{password},idnumber=#{idnumber},realname=#{realname},gender=#{gender},
+		phone=#{phone},mail=#{mail},textarea1=#{textarea1},textarea2=#{textarea2},textarea3=#{textarea3}
+		where t_id=#{t_id}
+	</update>
+</mapper>

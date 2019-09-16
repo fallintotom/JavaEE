@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 以下是mybatis框架下对问题表所声明方法的实现 -->
+<mapper namespace="dao.QuestionDao">
+   <select id="queryAllQuestions" resultType="pojo.Question">
+      select * from t_question;
+   </select>
+   <insert id="insertQuestion">
+      insert into t_question(q_id,title,c_id,q_time,type,q_username)
+      values(#{q_id},#{title},#{c_id},#{q_time},#{type},#{q_username})
+   </insert>
+   <select id="searchQuestion" resultType="pojo.Question">
+      select * from t_question
+      <where>
+          <if test="q_id!=null and q_id!=''">q_id=#{q_id}</if>
+          <if test="title!=null and title!=''">title like concat(concat('%',#{title}),'%')</if>
+          <if test="c_id!=null and c_id!=''">c_id=#{c_id}</if>
+          <if test="q_time!=null">q_time like concat(concat('%',#{q_time,jdbcType=DATE}),'%')</if>
+          <if test="type!=null and type!=''">type like concat(concat('%',#{type}),'%')</if>
+          <if test="q_username!=null and q_username!=''">q_username like concat(concat('%',#{q_username}),'%')</if>
+      </where>
+   </select>
+   <delete id="deleteQuestion">
+   	delete from t_question
+   	where q_id=#{q_id}
+   </delete>
+   <update id="updateQuestion">
+   	update t_question
+   	set title=#{title},c_id=#{c_id},q_time=#{q_time},type=#{type},q_username=#{q_username}
+   	where q_id=#{q_id}
+   </update>
+</mapper>

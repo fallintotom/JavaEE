@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 以下是mybatis框架下对管理员表所声明方法的实现 -->
+<mapper namespace="dao.ManagerDao">
+	<select id="findByUsername" resultType="pojo.Manager">
+		select * from t_manager
+		where username=#{username};
+	</select>
+	<update id="managerfindpassword">
+		update t_manager
+		set password=#{password}
+		where idnumber=#{idnumber}
+	</update>
+</mapper>
